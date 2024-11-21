@@ -27,13 +27,14 @@ h1, h2 {
 
 #config-panel {
   width: 25%;
-  background-color: #333;
+  background-color: #010d28;
   color: white;
   padding: 20px;
   position: absolute;
   top: 0;
   left: 0;
   overflow-y: auto;
+  border-radius: 20px;
 }
 
 h2 {
@@ -53,11 +54,12 @@ h2 {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #555;
+  background-color: #c29b00;
   color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  border-radius: 10px;
 }
 
 .config-btn:hover {
