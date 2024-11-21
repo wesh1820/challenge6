@@ -41,7 +41,7 @@ hdrLoader.load('assets/textures/warehouse.hdr', (hdrTexture) => {
 // GLTF Loader
 const loader = new GLTFLoader();
 let model;
-loader.load('assets/models/shoe_compressed.gltf', (gltf) => {
+loader.load('assets/models/shoe.gltf', (gltf) => {
     gltf.scene.traverse((child) => {
         if (child.name === 'sole_top') {
             child.material = new THREE.MeshStandardMaterial({
