@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css">
+    <title>Vite App</title>
+  </head>
+  <body>
+<main>
+<section>
+  <!-- 3D Model Viewer Container -->
+  <div id="model-container"></div>
+
+  <!-- Configuration Panel -->
+  <div id="config-panel">
+      <h2>Model Configuration</h2>
+
+      <div class="config-group">
+          <h3>Inside</h3>
+          <button class="config-btn" id="inside-btn">Toggle Inside</button>
+      </div>
+
+      <div class="config-group">
+          <h3>Laces</h3>
+          <button class="config-btn" id="laces-btn">Toggle Laces</button>
+      </div>
+
+      <div class="config-group">
+          <h3>Outside</h3>
+          <button class="config-btn" id="outside1-btn">Toggle Outside 1</button>
+          <button class="config-btn" id="outside2-btn">Toggle Outside 2</button>
+          <button class="config-btn" id="outside3-btn">Toggle Outside 3</button>
+      </div>
+
+      <div class="config-group">
+          <h3>Sole</h3>
+          <button class="config-btn" id="sole-btn">Toggle Sole</button>
+      </div>
+
+      <!-- Color Picker for model parts -->
+      <div class="config-group">
+          <h3>Change Color</h3>
+          <label for="color-picker">Select Color:</label>
+          <input type="color" id="color-picker" name="color-picker">
+      </div>
+  </div>
+</section>
+
+    <section>
+      <h2>WESH Shoes</h2>
+      <h2>Scroll to see your shoe</h2>
+    </section>
+
+</main>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

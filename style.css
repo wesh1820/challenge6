@@ -1,0 +1,75 @@
+body {
+margin: 0;
+}
+
+canvas {
+position: fixed;
+top: 0;
+left: 0;
+z-index: 9000;
+}
+main{
+  position: relative;
+  z-index: 9999;
+  padding-top: 100vh;
+}
+section {
+height: 100vh;
+}
+h1, h2 {
+  font-family: Arial, Helvetica, sans-serif ;
+  text-align: left;
+  font-size: 50px;
+  color: #d2b600;
+  text-shadow: 1px 1px 1px #000;
+}
+
+
+#config-panel {
+  width: 25%;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.config-group {
+  margin-bottom: 20px;
+}
+
+.config-group h3 {
+  margin-bottom: 10px;
+}
+
+.config-btn {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #555;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.config-btn:hover {
+  background-color: #777;
+}
+
+input[type="color"] {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  margin-top: 10px;
+}
+
+
+
