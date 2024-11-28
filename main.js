@@ -8,7 +8,7 @@ import * as dat from 'dat.gui'; // Import dat.GUI
 // Texture Loader
 const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load('assets/textures/matcap.png');
-const texturecamo = textureLoader.load('assets/textures/bliksem.png');
+const texturecamo = textureLoader.load('assets/textures/dam.jpg');
 const flash = textureLoader.load('assets/textures/flash08.png');
 
 // Scene
@@ -16,7 +16,7 @@ const scene = new THREE.Scene();
 
 // Camera
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+camera.position.z = 10;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,44 +41,149 @@ hdrLoader.load('assets/textures/warehouse.hdr', (hdrTexture) => {
 // GLTF Loader
 const loader = new GLTFLoader();
 let model;
+
+// Globale variabelen voor het huidige object
+let currentObjectIndex = 0;
+let selectedObject = null;
+
+// Objecten die we willen aanpassen
+const objectsToCustomize = ['laces', 'sole_top', 'meshes5_1', 'outside_1', 'outside_2', 'outside_3', 'sole_bottom'];
+const objectMap = {};
+
+// Kleurkeuzes (4 kleuren)
+const colors = [
+    0xFF0000, // Red
+    0x00FF00, // Green
+    0x0000FF, // Blue
+    0xFFFF00  // Yellow
+];
+
+// Laad de objecten en geef ze de mogelijkheid om gekleurd en getextureerd te worden
 loader.load('assets/models/shoe.gltf', (gltf) => {
     gltf.scene.traverse((child) => {
-        if (child.name === 'sole_top') {
+        if (objectsToCustomize.includes(child.name)) {
+            objectMap[child.name] = child; // Voeg het object toe aan de map
             child.material = new THREE.MeshStandardMaterial({
-                map: texturecamo,
-                color: 0xff0000, // Red for the sole
+                color: 0xFFFFFF, // Standaard kleur wit
                 metalness: 0.9,
                 roughness: 0.1,
             });
-        } else if (child.name === 'meshes5_1') {
-            child.material = new THREE.MeshStandardMaterial({
-                map: texturecamo,
-                color: 0x00ff00, // Green for this mesh
-                metalness: 0.9,
-                roughness: 0.1,
-            });
-        } else if (child.name === 'laces') {
-            child.material = new THREE.MeshStandardMaterial({
-                map: texturecamo,
-                color: 0x0000ff, // Blue for the laces
-                metalness: 0.5,
-                roughness: 0.2,
-            });
-            child.castShadow = true; // Enable casting shadows on the model
-            child.receiveShadow = true; // Enable receiving shadows
+            child.castShadow = true;
+            child.receiveShadow = true;
         }
     });
-
+    
     gltf.scene.position.z = 4.7;
     gltf.scene.position.y = 0;
     scene.add(gltf.scene);
     model = gltf.scene;
 
-    function animateModel() {
-        if (model) model.rotation.y += 0.01;
-        requestAnimationFrame(animateModel);
+    // Start customization menu voor het eerste object
+    openCustomizationMenu(objectsToCustomize[currentObjectIndex]);
+});
+document.querySelectorAll('.texture-preview').forEach(button => {
+    button.addEventListener('click', () => {
+        const textureName = button.getAttribute('data-texture');
+        if (selectedObject) {
+            if (textureName === 'Dam') {
+                selectedObject.material.map = texturecamo;
+            } else if (textureName === 'matcap') {
+                selectedObject.material.map = matcapTexture;
+            } else {
+                selectedObject.material.map = null;
+            }
+            selectedObject.material.needsUpdate = true;
+        }
+    });
+});
+document.querySelectorAll('.color-preview').forEach(button => {
+    button.addEventListener('click', () => {
+        const colorHex = button.getAttribute('data-color');
+        if (selectedObject) {
+            selectedObject.material.color.set(colorHex); // Stel de kleur direct in
+            selectedObject.material.needsUpdate = true; // Zorg dat de wijzigingen worden weergegeven
+        } else {
+            console.warn("Geen object geselecteerd om kleur toe te passen.");
+        }
+    });
+});
+
+// Functie om het menu voor het object te openen
+function openCustomizationMenu(objectName) {
+    selectedObject = objectMap[objectName]; // Verkrijg het object uit de objectMap
+    const menu = document.getElementById('customization-menu');
+    const objectNameLabel = document.getElementById('object-name');
+    const colorPicker = document.getElementById('color-picker');
+    const texturePicker = document.getElementById('texture-picker');
+
+    // Toon het menu
+    menu.style.display = 'block';
+
+    // Toon de naam van het geselecteerde onderdeel
+    objectNameLabel.textContent = `Customize ${selectedObject.name}`;
+
+    // Standaardkleur van het object instellen
+    colorPicker.value = `#${selectedObject.material.color.getHexString()}`;
+
+    // Eventlistener voor 'Apply' knop
+    document.getElementById('apply-changes').onclick = () => {
+        // Pas de kleur aan
+        const newColor = colorPicker.value;
+        selectedObject.material.color.set(newColor);
+
+        // Pas de textuur aan
+        const selectedTexture = texturePicker.value;
+        if (selectedTexture === 'Dam') {
+            selectedObject.material.map = texturecamo;
+        } else if (selectedTexture === 'matcap') {
+            selectedObject.material.map = matcapTexture;
+        } else {
+            selectedObject.material.map = null;
+        }
+
+        selectedObject.material.needsUpdate = true;
+
+        // Verberg het menu na wijzigingen
+        menu.style.display = 'none';
+    };
+
+    // Eventlistener voor 'Close' knop
+    document.getElementById('close-menu').onclick = () => {
+        menu.style.display = 'none';
+    };
+}
+
+// Functie om naar het volgende object te gaan
+document.getElementById('next-object').onclick = () => {
+    currentObjectIndex = (currentObjectIndex + 1) % objectsToCustomize.length;
+    openCustomizationMenu(objectsToCustomize[currentObjectIndex]);
+};
+
+// Functie om naar het vorige object te gaan
+document.getElementById('previous-object').onclick = () => {
+    currentObjectIndex = (currentObjectIndex - 1 + objectsToCustomize.length) % objectsToCustomize.length;
+    openCustomizationMenu(objectsToCustomize[currentObjectIndex]);
+};
+
+// Raycasting om objecten aan te klikken en menu te openen
+document.addEventListener('click', (event) => {
+    const mouse = new THREE.Vector2();
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    if (intersects.length > 0) {
+        const clickedObject = intersects[0].object;
+
+        // Alleen specifieke onderdelen toestaan
+        if (objectsToCustomize.includes(clickedObject.name)) {
+            openCustomizationMenu(clickedObject.name);
+        }
     }
-    animateModel();
 });
 
 // Lighting
@@ -123,6 +228,7 @@ const smokeMaterial = new THREE.MeshBasicMaterial({
     map: flash,
     transparent: true,
     opacity: 0.5,
+    scale: 1.5,
     color: 0xffffff,
 });
 for (let i = 0; i < 20; i++) {
@@ -207,16 +313,17 @@ smokeFolder.add(smokeControls, 'scale', 0.1, 5).onChange((value) => {
 });
 smokeFolder.open();
 
-// Manually adjust the GUI position if not visible
-gui.domElement.style.position = 'absolute';
-gui.domElement.style.top = '10px';
-gui.domElement.style.right = '10px';
-gui.domElement.style.zIndex = '9999'; // Ensure GUI is on top of other elements
-document.body.appendChild(gui.domElement);
-
 // Animation Loop
 function animate() {
+    // Draai de schoen of het hele model elke frame
+    if (model) {
+        model.rotation.y += 0.01; // Draai de schoen langzaam om de Y-as
+    }
+
+    // Update de orbit controls voor interactie
     controls.update();
+    
+    // Render de scene
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);

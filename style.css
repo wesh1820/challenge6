@@ -16,7 +16,7 @@ main{
 section {
 height: 100vh;
 }
-h1, h2 {
+h1 {
   font-family: Arial, Helvetica, sans-serif ;
   text-align: left;
   font-size: 50px;
@@ -25,53 +25,156 @@ h1, h2 {
 }
 
 
-#config-panel {
-  width: 25%;
-  background-color: #010d28;
-  color: white;
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow-y: auto;
-  border-radius: 20px;
+
+
+.container {
+  text-align: center;
+  background-color: white;
+}
+
+.swear {
+  width: 400px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
 h2 {
+  font-size: 3.5em;
+  color: #333;
+  margin-top: -120px;
+  background-color: rgb(105, 255, 71);
+}
+
+
+/* Algemeen hover-effect */
+.color-option:hover,
+.texture-option:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+    border: 2px solid #000;
+}
+
+/* Aparte styling voor secties */
+#color-options {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#texture-options {
+    padding-top: 10px;
+}
+
+/* Algemene instellingen voor het menu */
+#customization-menu {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8); /* Zwart met transparantie */
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px; /* Breder voor beter uitgelijnd */
+  color: white;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Stijl voor de koptekst van het menu */
+#customization-menu h3 {
+  margin-top: 0;
+  font-size: 18px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.config-group {
-  margin-bottom: 20px;
+/* Labels voor kleur- en textuurkeuze */
+#customization-menu label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
 }
 
-.config-group h3 {
-  margin-bottom: 10px;
+/* Kleurkiezer dropdown */
+#color-picker {
+  width: 100%;
+  padding: 6px;
+  background-color: transparent;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 15px;
 }
 
-.config-btn {
+/* Textuur picker dropdown */
+#texture-picker {
+  width: 100%;
+  padding: 6px;
+  background-color: transparent;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 15px;
+}
+
+/* Algemene stijl voor knoppen */
+#customization-menu button {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  background-color: #c29b00;
-  color: white;
+  background-color: rgb(105, 255, 71);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.config-btn:hover {
-  background-color: #777;
+/* Knop hover effect */
+#customization-menu button:hover {
+  background-color: rgb(105, 255, 71);
+  transform: translateY(-2px);
 }
 
-input[type="color"] {
-  width: 100%;
-  padding: 5px;
-  border: none;
-  margin-top: 10px;
+/* Knop voor sluiten van het menu */
+#close-menu {
+  background-color: #f44336; /* Rood voor de sluitknop */
 }
 
+/* Hover effect voor de sluitknop */
+#close-menu:hover {
+  background-color: #e53935;
+}
 
+/* Knop voor navigeren naar het volgende/voorgaande object */
+#next-object, #previous-object {
+  background-color: #2196F3; /* Blauwe kleur voor knoppen */
+}
 
+/* Hover effect voor de nav knoppen */
+#next-object:hover, #previous-object:hover {
+  background-color: #1976D2;
+}
+
+/* Zorg ervoor dat de knoppen een beetje ruimte hebben */
+button + button {
+  margin-top: 8px;
+}
+
+/* Zorg ervoor dat het menu niet te veel de 3D-scene overlapt */
+#customization-menu {
+  width: 280px; /* Net iets breder voor betere ruimte */
+}
+
+/* Zorg ervoor dat het menu alleen zichtbaar is wanneer nodig */
+#customization-menu[style="display: none;"] {
+  display: none;
+}
+.color-preview, .texture-preview {
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.color-preview:hover, .texture-preview:hover {
+  border-color: #000;
+}

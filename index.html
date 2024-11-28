@@ -9,48 +9,63 @@
   </head>
   <body>
 <main>
-<section>
-  <!-- 3D Model Viewer Container -->
-  <div id="model-container"></div>
 
-  <!-- Configuration Panel -->
-  <div id="config-panel">
-      <h2>Shoe Configuration</h2>
-
-      <div class="config-group">
-          <h3>Inside</h3>
-          <button class="config-btn" id="inside-btn">Toggle Inside</button>
-      </div>
-
-      <div class="config-group">
-          <h3>Laces</h3>
-          <button class="config-btn" id="laces-btn">Toggle Laces</button>
-      </div>
-
-      <div class="config-group">
-          <h3>Outside</h3>
-          <button class="config-btn" id="outside1-btn">Toggle Outside 1</button>
-          <button class="config-btn" id="outside2-btn">Toggle Outside 2</button>
-          <button class="config-btn" id="outside3-btn">Toggle Outside 3</button>
-      </div>
-
-      <div class="config-group">
-          <h3>Sole</h3>
-          <button class="config-btn" id="sole-btn">Toggle Sole</button>
-      </div>
-
-      <!-- Color Picker for model parts -->
-      <div class="config-group">
-          <h3>Change Color</h3>
-          <label for="color-picker">Select Color:</label>
-          <input type="color" id="color-picker" name="color-picker">
-      </div>
-  </div>
-</section>
 
     <section>
-      <h2>WESH Shoes</h2>
-      <h2>Scroll to see your shoe</h2>
+      <div class="container">
+        <img class="swear" src="./public/swearlogo.png" alt="swear" id="swear" />
+        <h2>Scroll to see your shoe</h2>
+      </div>
+      <div id="customization-menu" style="display: none;">
+        <h3 id="object-name">Customize Part</h3>
+    
+        <div id="color-circle" style="display: flex; gap: 10px; padding: 10px;">
+          <button class="color-preview" style="background-color: rgb(55, 118, 255);" data-color="#FF0000"></button>
+          <button class="color-preview" style="background-color: rgb(53, 255, 49);" data-color="#00FF00"></button>
+          <button class="color-preview" style="background-color: rgb(255, 154, 225);" data-color="#0000FF"></button>
+          <button class="color-preview" style="background-color: rgb(45, 0, 68);" data-color="#FFFF00"></button>
+      </div>
+      <div id="texture-preview" style="display: flex; gap: 10px; padding: 10px;">
+          <button class="texture-preview" data-texture="Dam" style="background-image: url('assets/textures/dam.jpg'); width: 50px; height: 50px; background-size: cover;"></button>
+          <button class="texture-preview" data-texture="matcap" style="background-image: url('assets/textures/matcap.png'); width: 50px; height: 50px; background-size: cover;"></button>
+      </div>
+      
+        <button id="close-menu">Close Menu</button>
+        <button id="previous-object">Previous Part</button>
+        <button id="next-object">Next Part</button>
+    </div>
+    
+    
+    
+    
+    
+    
+    <style>
+        #ui-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+        }
+        #ui-container h2 {
+            margin-top: 0;
+        }
+        #ui-container label, #ui-container input, #ui-container select {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #customization-menu {
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+}
+
+    </style>
+    
     </section>
 
 </main>
