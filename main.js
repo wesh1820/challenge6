@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { gsap } from 'gsap';
 import * as dat from 'dat.gui'; // Import dat.GUI
+import { setupOrderButton } from './app.js';
 
 // Texture Loader
 const textureLoader = new THREE.TextureLoader();
@@ -50,9 +51,10 @@ let selectedObject = null;
 const objectsToCustomize = ['laces', 'sole_top', 'meshes5_1', 'outside_1', 'outside_2', 'outside_3', 'sole_bottom'];
 const objectMap = {};
 
+setupOrderButton(objectsToCustomize, objectMap);
 // Kleurkeuzes (4 kleuren)
 const colors = [
-    0xFF0000, // Red
+    0x3776ff, // Red
     0x00FF00, // Green
     0x0000FF, // Blue
     0xFFFF00  // Yellow
@@ -81,6 +83,29 @@ loader.load('assets/models/shoe.gltf', (gltf) => {
     // Start customization menu voor het eerste object
     openCustomizationMenu(objectsToCustomize[currentObjectIndex]);
 });
+// Order Button Event Listener
+document.getElementById('order-button').addEventListener('click', () => {
+    const orderDetails = {};
+
+    // Loop through all customizable objects
+    objectsToCustomize.forEach((objectName) => {
+        const object = objectMap[objectName];
+        if (object) {
+            orderDetails[objectName] = {
+                color: `#${object.material.color.getHexString()}`, // Hex kleur
+                texture: object.material.map ? object.material.map.image.src : 'None', // Textuurbron of 'None'
+            };
+        }
+    });
+
+    // Output de gegevens naar de console of op de pagina
+    console.log('Order Details:', orderDetails);
+
+    // Toon de gegevens in een <pre> element (optioneel)
+    const orderOutput = document.getElementById('order-output');
+    orderOutput.textContent = JSON.stringify(orderDetails, null, 2);
+});
+
 document.querySelectorAll('.texture-preview').forEach(button => {
     button.addEventListener('click', () => {
         const textureName = button.getAttribute('data-texture');

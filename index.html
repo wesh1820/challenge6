@@ -20,10 +20,10 @@
         <h3 id="object-name">Customize Part</h3>
     
         <div id="color-circle" style="display: flex; gap: 10px; padding: 10px;">
-          <button class="color-preview" style="background-color: rgb(55, 118, 255);" data-color="#FF0000"></button>
+          <button class="color-preview" style="background-color: rgb(55, 118, 255);" data-color="#3776ff"></button>
           <button class="color-preview" style="background-color: rgb(53, 255, 49);" data-color="#00FF00"></button>
-          <button class="color-preview" style="background-color: rgb(255, 154, 225);" data-color="#0000FF"></button>
-          <button class="color-preview" style="background-color: rgb(45, 0, 68);" data-color="#FFFF00"></button>
+          <button class="color-preview" style="background-color: rgb(255, 154, 225);" data-color="#ff9ae1"></button>
+          <button class="color-preview" style="background-color: rgb(45, 0, 68);" data-color="#2d0044"></button>
       </div>
       <div id="texture-preview" style="display: flex; gap: 10px; padding: 10px;">
           <button class="texture-preview" data-texture="Dam" style="background-image: url('assets/textures/dam.jpg'); width: 50px; height: 50px; background-size: cover;"></button>
@@ -33,6 +33,9 @@
         <button id="close-menu">Close Menu</button>
         <button id="previous-object">Previous Part</button>
         <button id="next-object">Next Part</button>
+        <button id="order-button">Order</button>
+<pre id="order-output"></pre> <!-- Voor debug- of visualisatiedoeleinden -->
+
     </div>
     
     
@@ -70,5 +73,7 @@
 
 </main>
     <script type="module" src="/main.js"></script>
+    <script type="module" src="/app.js"></script>
+    
   </body>
 </html>
